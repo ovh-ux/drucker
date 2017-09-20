@@ -1,0 +1,37 @@
+pages:
+    - name: Home
+      url: /index.html
+      subnav:
+          - name: Prerequisites
+            url: /index.html#prerequisites
+          - name: Usage
+            url: /index.html#usage
+          - name: Credits
+            url: /index.html#credits
+          - name: License
+            url: /index.html#license
+    - name: Usage
+      url: /pages/usage.html
+      subnav:
+          - name: Overview
+            url: /pages/usage.html#overview
+          - name: Quick Start
+            url: /pages/usage.html#quick-start
+          - name: Makefile
+            url: /pages/usage.html#makefile
+          - name: Loading the environment
+            url: /pages/usage.html#loading-the-environment
+          - name: Directory structure
+            url: /pages/usage.html#directory-structure
+          - name: Config
+            url: /pages/usage.html#config
+          - name: Fresh install of Drupal (new project)
+            url: /pages/usage.html#fresh-install-of-drupal-new-project
+          - name: Updating Drupal Core
+            url: /pages/usage.html#updating-drupal-core
+    - name: Features
+      url: /pages/features.html
+    - name: Tools
+      url: /pages/tools.html
+    - name: Troubleshooting
+      url: /pages/troubleshooting.html

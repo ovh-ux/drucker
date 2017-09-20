@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <title></title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <nav class="col-md-3">
+                    
+<ul>
+    
+        
+        <li>
+            <a href="/index.html">Home</a>
+        </li>
+        
+        <li>
+            <ul>
+                
+                    <li>
+                        <a href="/index.html#prerequisites">Prerequisites</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#usage">Usage</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#credits">Credits</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#license">License</a>
+                    </li>
+                
+            </ul>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/usage.html">Usage</a>
+        </li>
+        
+        <li>
+            <ul>
+                
+                    <li>
+                        <a href="/pages/usage.html#overview">Overview</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#quick-start">Quick Start</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#makefile">Makefile</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#loading-the-environment">Loading the environment</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#directory-structure">Directory structure</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#config">Config</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#fresh-install-of-drupal-new-project">Fresh install of Drupal (new project)</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#updating-drupal-core">Updating Drupal Core</a>
+                    </li>
+                
+            </ul>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/features.html">Features</a>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/tools.html">Tools</a>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/troubleshooting.html">Troubleshooting</a>
+        </li>
+        
+        
+    
+</ul>
+
+                </nav>
+                <div class="col-md-9">
+                    <h2 id="prerecquisites">Prerecquisites</h2>
+
+<p>You need to source the <code class="highlighter-rouge">load-env</code> file inside Drucker directory to access all these tools:</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">cd </span>drucker
+<span class="gp">$ </span>. load-env
+</code></pre>
+</div>
+
+<hr />
+
+<h2 id="php-cli">PHP CLI</h2>
+
+<p>You can use the PHP CLI directly in your environment.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>php <span class="o">[</span>options] <span class="o">[</span>-f] &lt;file&gt; <span class="o">[</span>args...]
+</code></pre>
+</div>
+
+<p>Note: if you just enter <code class="highlighter-rouge">php</code>, it’ll launch a prompt inside the PHP container.</p>
+
+<hr />
+
+<h2 id="drush">Drush</h2>
+
+<p>PHP container has Drush installed.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>drush
+</code></pre>
+</div>
+
+<p>Also, you can use preconfigured drush alias @dev:</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>drush @dev
+</code></pre>
+</div>
+
+<p>!!! note “”
+    Launch <code class="highlighter-rouge">drush init</code> to add some additional useful features, like Drush auto-completion.</p>
+
+<p><strong>Useful commands:</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">drush cr</code> : Clear the cache</li>
+  <li><code class="highlighter-rouge">drush cim</code> : Import the configuration to your current database</li>
+  <li><code class="highlighter-rouge">drush cex</code> : Export your current configuration to config files</li>
+  <li><code class="highlighter-rouge">drush sql-connect</code> : Open a SQL CLI</li>
+</ul>
+
+<p>You can find all documentation <a href="https://drushcommands.com">here</a>.</p>
+
+<hr />
+
+<h2 id="composer">Composer</h2>
+
+<p>PHP container has Composer installed.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>composer
+</code></pre>
+</div>
+
+<p><strong>Useful commands:</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">composer install</code> : Install all dependencies, using composer.json</li>
+  <li><code class="highlighter-rouge">composer update</code> : Update all dependencies</li>
+  <li><code class="highlighter-rouge">composer require drupal/&lt;module&gt;</code> : Install a module from Drupal hub</li>
+</ul>
+
+<p>You can find all documentation <a href="https://getcomposer.org/doc/03-cli.md">here</a>.</p>
+
+<hr />
+
+<h2 id="drupal-console">Drupal Console</h2>
+
+<p>PHP container has Drupal Console launcher installed. Drupal Console itself must be installed per project manually via Composer.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>drupal
+</code></pre>
+</div>
+
+<p>The Drupal Console is useful for the <code class="highlighter-rouge">generate</code> feature. It can generates a bunch of useful things.
+You can, for example, generate a module, using this command:</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>drupal generate:module
+</code></pre>
+</div>
+
+<p>!!! note “”
+    Launch <code class="highlighter-rouge">drupal init</code> to add some additional useful features, like Drupal Console auto-completion.</p>
+
+<p><strong>Useful commands:</strong></p>
+
+<ul>
+  <li><code class="highlighter-rouge">drupal list</code> : List all available commands</li>
+</ul>
+
+<p>You can find all documentation <a href="https://hechoendrupal.gitbooks.io/drupal-console/content/en/index.html">here</a>.</p>
+
+<hr />
+
+<h2 id="nodejs">Node.js</h2>
+
+<p>You have access to a Node.js container.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>node <span class="o">[</span>options] <span class="o">[</span>v8 options] <span class="o">[</span>script.js | -e <span class="s2">"script"</span> | -] <span class="o">[</span>--] <span class="o">[</span>arguments]
+</code></pre>
+</div>
+
+<p>Note: the current folder is mounted inside <code class="highlighter-rouge">/usr/src/app</code>, and it’s the working dir.</p>
+
+<hr />
+
+<h2 id="npmyarngulp">NPM/Yarn/Gulp</h2>
+
+<p>You can use one of these tools, that will be launched inside the Node.js container.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>npm
+<span class="o">[</span>or]
+<span class="gp">$ </span>yarn
+<span class="o">[</span>or]
+<span class="gp">$ </span>gulp
+</code></pre>
+</div>
+
+<p>Note: the current folder is mounted inside <code class="highlighter-rouge">/usr/src/app</code>, and it’s the working dir.</p>
+
+<hr />
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

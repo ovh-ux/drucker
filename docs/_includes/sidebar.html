@@ -1,0 +1,21 @@
+{% assign pages = site.data.nav.pages %}
+<ul>
+    {% for page in pages %}
+        {% unless page.hiding == true %}
+        <li>
+            <a href="{{page.url}}">{{page.name}}</a>
+        </li>
+        {% if page.subnav[0] %}
+        <li>
+            <ul>
+                {% for subentry in page.subnav %}
+                    <li>
+                        <a href="{{subentry.url}}">{{subentry.name}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+        {% endif %}
+        {% endunless %}
+    {% endfor %}
+</ul>

@@ -1,3 +1,8 @@
+---
+title: troubleshooting
+layout: page
+---
+
 ## Network: IP already in use
 This error is shown because you try to use a command (like Drush) with the stack stopped (make stop). You need to either re-run the stack (```make start```), or shutdown it.
 

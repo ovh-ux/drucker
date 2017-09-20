@@ -1,3 +1,8 @@
+---
+title: usage
+layout: page
+---
+
 ## Overview
 
 These are the minimal steps to take if you set up and work with a project:
@@ -112,7 +117,7 @@ During setup, the directory structure will become something like this:
             * **private**
             * **tmp**
             * **web**
-            
+
 * The name of ***Project*** can be chosen as you like.
 * **drucker** contains build files and utilities for Docker
     * **docker-runtime** contains the runtime data (databases, configuration files and so on).

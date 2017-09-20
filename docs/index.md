@@ -1,7 +1,12 @@
+---
+title: home
+layout: page
+hiding: false
+---
 Drucker - DRUpal doCKER dev environment
 =======================================
 
-![drucker](banner.png)
+# ![drucker](banner.png)
 
 Drucker is a lightweight Drupal developer environment. It contains required tools, like Drush or Composer, without useless extra.
 The goals of this project is to have a Drupal development environment without installing anything on your desk (except Docker), and to be easy as possible to use.

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <title></title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <nav class="col-md-3">
+                    
+<ul>
+    
+        
+        <li>
+            <a href="/index.html">Home</a>
+        </li>
+        
+        <li>
+            <ul>
+                
+                    <li>
+                        <a href="/index.html#prerequisites">Prerequisites</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#usage">Usage</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#credits">Credits</a>
+                    </li>
+                
+                    <li>
+                        <a href="/index.html#license">License</a>
+                    </li>
+                
+            </ul>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/usage.html">Usage</a>
+        </li>
+        
+        <li>
+            <ul>
+                
+                    <li>
+                        <a href="/pages/usage.html#overview">Overview</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#quick-start">Quick Start</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#makefile">Makefile</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#loading-the-environment">Loading the environment</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#directory-structure">Directory structure</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#config">Config</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#fresh-install-of-drupal-new-project">Fresh install of Drupal (new project)</a>
+                    </li>
+                
+                    <li>
+                        <a href="/pages/usage.html#updating-drupal-core">Updating Drupal Core</a>
+                    </li>
+                
+            </ul>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/features.html">Features</a>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/tools.html">Tools</a>
+        </li>
+        
+        
+    
+        
+        <li>
+            <a href="/pages/troubleshooting.html">Troubleshooting</a>
+        </li>
+        
+        
+    
+</ul>
+
+                </nav>
+                <div class="col-md-9">
+                    <h1 id="drucker---drupal-docker-dev-environment">Drucker - DRUpal doCKER dev environment</h1>
+
+<h1><img src="/banner.png" alt="drucker" /></h1>
+
+<p>Drucker is a lightweight Drupal developer environment. It contains required tools, like Drush or Composer, without useless extra.
+The goals of this project is to have a Drupal development environment without installing anything on your desk (except Docker), and to be easy as possible to use.</p>
+
+<p>You don’t need any services installed (like PHP, MySQL, …) or any WAMP/LAMP/… stack. Everything is managed by Docker, with the following containers:</p>
+
+<ul>
+  <li>A container with Nginx</li>
+  <li>A container with PHP, Drush, Drupal Console, Composer</li>
+  <li>A container with phpMyAdmin</li>
+  <li>A container with Mariadb</li>
+  <li>A container with Mailhog</li>
+  <li>Node.js, NPM, Yarn and Gulp on the fly</li>
+</ul>
+
+<p>If you want a more advanced stack, take a look at <a href="https://github.com/wodby/docker4drupal">Docker4Drupal</a> or <a href="https://github.com/geerlingguy/drupal-vm">Drupal VM</a> projects.</p>
+
+<h2 id="prerequisites">Prerequisites</h2>
+
+<p>An environnement where you can have the following features:</p>
+
+<ul>
+  <li>GIT</li>
+  <li>Docker</li>
+  <li>Docker-compose</li>
+</ul>
+
+<h3 id="docker">Docker</h3>
+
+<p>You can find the installation instructions <a href="https://docs.docker.com/engine/installation">here</a>.</p>
+
+<h3 id="docker-compose">Docker-compose</h3>
+
+<p>We suggest to install Docker-compose as a container, in your userland (no root required!):</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c"># Create your home bin for local user installation if it does not exist</span>
+<span class="gp">$ </span>mkdir ~/bin
+<span class="c"># Download docker-compose shell script locally</span>
+<span class="c"># Note: replace the version by the latest available</span>
+<span class="gp">$ </span>curl -L --fail https://github.com/docker/compose/releases/download/1.16.1/run.sh &gt; ~/bin/docker-compose
+<span class="c"># Make docker-compose an executable</span>
+<span class="gp">$ </span>chmod u+x ~/bin/docker-compose
+<span class="c"># Source the ~/bin folder</span>
+<span class="c"># Note: don't forget to add it in your ~/.bashrc ("export PATH=$HOME/bin:$PATH")</span>
+<span class="gp">$ </span><span class="nb">source</span> ~/bin
+<span class="c"># Check if installation is ok</span>
+<span class="gp">$ </span>docker-compose --version
+</code></pre>
+</div>
+<p>This script is provided by the Docker-compose team and will download the official image at the first launch and build it.</p>
+
+<p>You can find the full documentation <a href="https://docs.docker.com/compose/install">here</a>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>See <a href="usage.md">Usage</a> section.</p>
+
+<h2 id="credits">Credits</h2>
+
+<ul>
+  <li>Based on the <a href="https://github.com/peperoni60/drupal-docker"><code class="highlighter-rouge">drupal-docker</code></a> project.</li>
+  <li>Some of the containers are provided by Wodby.</li>
+</ul>
+
+<h2 id="license">License</h2>
+
+<p>GPL 3.0 (original license)</p>
+
+<hr />
+
+
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
