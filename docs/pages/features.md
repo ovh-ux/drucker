@@ -1,3 +1,8 @@
+---
+title: features
+layout: page
+---
+
 ## Logs
 
 You can access all the containers logs, using these commands:

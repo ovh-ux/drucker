@@ -1,1 +1,12 @@
-theme: jekyll-theme-minimal
+sass:
+    sass_dir: _sass
+    style: compressed
+
+exclude:
+- bin
+- Gemfile
+- Gemfile.lock
+- Rakefile
+- scripts
+- README.md
+- vendor

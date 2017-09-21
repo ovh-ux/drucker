@@ -1,3 +1,8 @@
+---
+title: tools
+layout: page
+---
+
 ## Prerecquisites
 
 You need to source the `load-env` file inside Drucker directory to access all these tools:

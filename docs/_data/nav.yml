@@ -1,0 +1,80 @@
+title: Drucker - DRUpal doCKER dev environment
+
+pages:
+    - name: Home
+      url: /
+      subnav:
+          - name: Prerequisites
+            url: /index.html#prerequisites
+          - name: Usage
+            url: /index.html#usage
+          - name: Credits
+            url: /index.html#credits
+          - name: License
+            url: /index.html#license
+    - name: Usage
+      url: /pages/usage.html
+      subnav:
+          - name: Overview
+            url: /pages/usage.html#overview
+          - name: Quick Start
+            url: /pages/usage.html#quick-start
+          - name: Makefile
+            url: /pages/usage.html#makefile
+          - name: Loading the environment
+            url: /pages/usage.html#loading-the-environment
+          - name: Directory structure
+            url: /pages/usage.html#directory-structure
+          - name: Config
+            url: /pages/usage.html#config
+          - name: Fresh install of Drupal (new project)
+            url: /pages/usage.html#fresh-install-of-drupal-new-project
+          - name: Updating Drupal Core
+            url: /pages/usage.html#updating-drupal-core
+          - name: Using in production
+            url: /pages/usage.html#using-in-production
+          - name: Containers used
+            url: /pages/usage.html#containers-used
+    - name: Features
+      url: /pages/features.html
+      subnav:
+          - name: Logs
+            url: /pages/features.html#logs
+          - name: Multiple projects
+            url: /pages/features.html#multiple-projects
+          - name: Backup - full
+            url: /pages/features.html#backup---full
+          - name: Backup - SQL Database only
+            url: /pages/features.html#backup---sql-database-only
+          - name: SQL Sanitize
+            url: /pages/features.html#sql-sanitize
+          - name: Accessing containers
+            url: /pages/features.html#accessing-containers
+          - name: Module patches
+            url: /pages/features.html#module-patches
+    - name: Tools
+      url: /pages/tools.html
+      subnav:
+          - name: Prerequisites
+            url: /pages/tools.html#prerequisites
+          - name: PHP CLI
+            url: /pages/tools.html#php-cli
+          - name: Drush
+            url: /pages/tools.html#drush
+          - name: Composer
+            url: /pages/tools.html#composer
+          - name: Drupal Console
+            url: /pages/tools.html#drupal-console
+          - name: Node.js
+            url: /pages/tools.html#nodejs
+          - name: NPM/Yarn/Gulp
+            url: /pages/tools.html#npmyarngulp
+    - name: Troubleshooting
+      url: /pages/troubleshooting.html
+      subnav:
+          - name: "Network: IP already in use"
+            url: /pages/troubleshooting.html#network-ip-already-in-use
+          - name: "Network: Why IPv6 is disabled?"
+            url: /pages/troubleshooting.html#network-why-ipv6-is-disabled
+          - name: Command not found
+            url: /pages/troubleshooting.html#command-not-found
