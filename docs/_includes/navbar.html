@@ -17,7 +17,7 @@
     {% for navEntry in pages %}
         <li class="navbar__entry">
             <a class="navbar__link navbar__link--lvl-1"
-               href="{{navEntry.url}}">
+               href="{{navEntry.url | prepend: site.github.url}}">
                {% if navEntry.subnav[0] %}
                    {% if navEntry.url == page.url %}
                         <i class="navbar__link-chevron oui-icon oui-icon-chevron-down"
@@ -39,7 +39,7 @@
                     {% for subentry in navEntry.subnav %}
                         <li class="navbar__entry">
                             <a class="navbar__link navbar__link--lvl-2"
-                               href="{{subentry.url}}">
+                               href="{{subentry.url | prepend: site.github.url}}">
                                <span>{{subentry.name}}</span>
                             </a>
                         </li>
