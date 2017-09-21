@@ -1,0 +1,51 @@
+{% assign pages = site.data.nav.pages %}
+
+<button type="button"
+        class="navbar__toggle hidden-md hidden-lg"
+        id="navbar-toggle">
+    <span class="navbar__icon">
+        <span class="navbar__icon-bar navbar__icon-bar--top"></span>
+        <span class="navbar__icon-bar navbar__icon-bar--middle"></span>
+        <span class="navbar__icon-bar navbar__icon-bar--bottom"></span>
+    </span>
+    <span class="navbar__title">{{site.data.nav.title}}</span>
+</button>
+
+<ul class="navbar__entries"
+    id="navbar-entries">
+    <span class="navbar__title hidden-xs hidden-sm">{{site.data.nav.title}}</span>
+    {% for navEntry in pages %}
+        <li class="navbar__entry">
+            <a class="navbar__link navbar__link--lvl-1"
+               href="{{navEntry.url}}">
+               {% if navEntry.subnav[0] %}
+                   {% if navEntry.url == page.url %}
+                        <i class="navbar__link-chevron oui-icon oui-icon-chevron-down"
+                           aria-hidden="true"></i>
+                   {% else %}
+                        <i class="navbar__link-chevron oui-icon oui-icon-chevron-right"
+                           aria-hidden="true"></i>
+                   {% endif %}
+               {% endif %}
+               {% if navEntry.url == page.url %}
+                    <span class="navbar__link-active">{{navEntry.name}}</span>
+                    <span class="navbar__link-active-icon"></span>
+               {% else %}
+                    <span>{{navEntry.name}}</span>
+               {% endif %}
+            </a>
+            {% if navEntry.subnav[0] %}
+                <ul class="navbar__subentries {% if navEntry.url == page.url %}navbar__subentries--active{% endif %}">
+                    {% for subentry in navEntry.subnav %}
+                        <li class="navbar__entry">
+                            <a class="navbar__link navbar__link--lvl-2"
+                               href="{{subentry.url}}">
+                               <span>{{subentry.name}}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,18 @@
+---
+# this ensures Jekyll reads the file to be transformed into CSS later
+# only Main files contain this front matter, not partials.
+---
+
+@import "variables/_sizes";
+@import "variables/_colors";
+
+body,
+html {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+@import "components/_table";
+@import "components/_sidebar";
+@import "components/_content";

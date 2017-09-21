@@ -1,0 +1,36 @@
+.content {
+    box-sizing: border-box;
+    padding-top: $space-l1;
+    padding-bottom: $space-l1;
+}
+
+img[title="banner"] {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-bottom: $space-l1;
+}
+
+h2:not(:first-child) {
+    margin-top: $space-l1;
+}
+
+
+@media screen and (min-width: $screen-md) {
+    .content {
+        padding-top: $space-l2;
+        padding-bottom: $space-l3;
+    }
+
+    img[title="banner"] {
+        margin-bottom: $space-l3;
+    }
+
+    h2:not(:first-child) {
+        margin-top: $space-l3;
+    }
+
+    h3:not(:first-child) {
+        margin-top: $space-l1;
+    }
+}

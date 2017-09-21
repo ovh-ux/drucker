@@ -1,0 +1,4 @@
+.with-default-rem-base {
+  rem-calc-basic: 1rem;
+  rem-calc-without-unit: 2rem;
+}

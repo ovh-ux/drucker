@@ -1,0 +1,7 @@
+.with-custom-rem-base {
+  rem-calc-basic: 1.6rem;
+  rem-calc-without-unit: 3.2rem;
+  rem-calc-with-rem: 1rem;
+  rem-calc-with-em: 1rem;
+  rem-calc-with-ratio: 10rem;
+}

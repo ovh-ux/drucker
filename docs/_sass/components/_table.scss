@@ -1,0 +1,30 @@
+table {
+    width: 100%;
+    border: 0;
+    margin: 0 0 $space-l1;
+
+    th,
+    td {
+        padding: $space-s1 $space-base;
+    }
+
+    th {
+        background-color: $oui-color-concrete;
+        font-weight: 400;
+        color: #333;
+    }
+
+    td {
+        border-bottom: solid 1px #eaeaea;
+        color: #676767;
+    }
+
+    tbody {
+        tr {
+            background-color: fade-out($oui-color-concrete, 1);
+            &:hover {
+                background-color: fade-out($oui-color-concrete, 0.5)
+            }
+        }
+    }
+}
