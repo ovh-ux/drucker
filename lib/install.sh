@@ -114,6 +114,7 @@ if [ ! -e "$(projectdir)/www/web/sites/default/settings.local.php" ]; then
     echo "Creating settings.local.php..."
 
     # Activates it inside settings.php
+    echo "<?php" > "$(projectdir)/www/web/sites/default/settings.php"
     echo "if (file_exists(\$app_root . '/' . \$site_path . '/settings.local.php')) {" >> "$(projectdir)/www/web/sites/default/settings.php"
     echo "  include \$app_root . '/' . \$site_path . '/settings.local.php';" >> "$(projectdir)/www/web/sites/default/settings.php"
     echo "}" >> "$(projectdir)/www/web/sites/default/settings.php"
