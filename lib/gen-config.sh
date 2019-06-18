@@ -156,30 +156,15 @@ while true; do
 done
 
 # Additional XDEBUG variables
-PHP_XDEBUG_REMOTE_HOST="localhost"
-PHP_XDEBUG_REMOTE_PORT="9000"
+PHP_XDEBUG_PROXY_PORT="9000"
 if [ "${PHP_XDEBUG_ENABLED}" == 1 ]; then
-
-  ## PHP_XDEBUG_REMOTE_HOST
+  ## PHP_XDEBUG_PROXY_PORT
   while true; do
-    printf "\e[1mEnter the XDEBUG remote host:\e[0m "
-    read PHP_XDEBUG_REMOTE_HOST
-
-    REGEX='^[a-z0-9_.-]+$';
-    if ! [[ $PHP_XDEBUG_REMOTE_HOST =~ $REGEX ]]; then
-        echo "Invalid input. Please use a valid host name."
-    else
-        break;
-    fi
-  done
-
-  ## PHP_XDEBUG_REMOTE_PORT
-  while true; do
-    printf "\e[1mEnter the XDEBUG remote port:\e[0m "
-    read PHP_XDEBUG_REMOTE_PORT
+    printf "\e[1mEnter the XDEBUG PROXY remote port:\e[0m "
+    read PHP_XDEBUG_PROXY_PORT
 
     REGEX='^[0-9]+$';
-    if ! [[ $PHP_XDEBUG_REMOTE_PORT =~ $REGEX ]]; then
+    if ! [[ $PHP_XDEBUG_PROXY_PORT =~ $REGEX ]]; then
         echo "Invalid input. Please use only numbers."
     else
         break;
@@ -234,8 +219,8 @@ sed -i "s/%%PUBLIC_PMA_PORT%%/$PUBLIC_PMA_PORT/g" "${PROJECT_DIR}/drucker.config
 sed -i "s/%%DRUPAL_VERSION%%/$DRUPAL_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_VERSION%%/$PHP_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_XDEBUG_ENABLED%%/$PHP_XDEBUG_ENABLED/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_REMOTE_HOST%%/$PHP_XDEBUG_REMOTE_HOST/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_REMOTE_PORT%%/$PHP_XDEBUG_REMOTE_PORT/g" "${PROJECT_DIR}/drucker.config"
+sed -i "s/%%PHP_XDEBUG_PROXY_PORT%%/$PHP_XDEBUG_PROXY_PORT/g" "${PROJECT_DIR}/drucker.config"
+sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%/$PHP_XDEBUG_REMOTE_LOG/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%SUBNET%%/$SUBNET/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_VERSION%%/$NODE_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_BROWSERSYNC_PORT%%/$NODE_BROWSERSYNC_PORT/g" "${PROJECT_DIR}/drucker.config"

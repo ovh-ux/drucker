@@ -33,8 +33,9 @@ services:
     environment:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mail:1025
       PHP_XDEBUG: $PHP_XDEBUG_ENABLED
-      PHP_XDEBUG_REMOTE_HOST: $PHP_XDEBUG_REMOTE_HOST
-      PHP_XDEBUG_REMOTE_PORT: $PHP_XDEBUG_REMOTE_PORT
+      PHP_XDEBUG_REMOTE_HOST: $PYDBGPPROXY_IP
+      PHP_XDEBUG_REMOTE_PORT: 9900
+      PHP_XDEBUG_REMOTE_LOG: $PHP_XDEBUG_REMOTE_LOG
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
       PHP_HOST_NAME: $WWW_DOMAIN
       PHP_SITE_NAME: dev # drush alias name
@@ -51,7 +52,24 @@ services:
     networks:
       dev_net:
         ipv4_address: $PHP_IP
-
+  pydbgpproxy:
+    container_name: $PYDBGPPROXY_NAME
+    image: $PYDBGPPROXY_IMAGE
+    build:
+        context: $PYDBGPPROXY_IMAGE_CONTEXT
+        args:
+            DOCKER_USER: $DOCKER_USER
+            DOCKER_USER_GROUP: $DOCKER_USER_GROUP
+    environment:
+        PHP_HOST: "0.0.0.0"
+        PHP_PORT: 9900
+        DEV_HOST: "0.0.0.0"
+        DEV_PORT: 9901
+    ports:
+        - "$PHP_XDEBUG_PROXY_PORT:9901"
+    networks:
+        dev_net:
+            ipv4_address: $PYDBGPPROXY_IP
   www:
     container_name: $WWW_NAME
     image: $WWW_IMAGE
