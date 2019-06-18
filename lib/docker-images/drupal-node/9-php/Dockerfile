@@ -1,6 +1,7 @@
 FROM node:9
 MAINTAINER OVH-UX <github@ovh.net>
 
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list
 RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential make gcc g++ python openssl git
 
@@ -20,7 +21,7 @@ RUN apt-get install -y php5-dev  && \
       /var/lib/apt/lists/*
 
 # Uses dumb-init to help prevent zombie processes
-ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.1/dumb-init_1.2.1_amd64 /usr/local/bin/dumb-init
+ADD https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_v1.2.2_amd64 /usr/local/bin/dumb-init
 RUN chmod +x /usr/local/bin/dumb-init
 
 # Permissions required by Yeoman to run: https://github.com/keystonejs/keystone/issues/1566#issuecomment-217736880
