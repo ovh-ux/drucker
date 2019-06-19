@@ -156,6 +156,8 @@ while true; do
 done
 
 ## PHP_XDEBUG_REMOTE_LOG
+
+PHP_XDEBUG_REMOTE_LOG=""
 while true; do
   printf "\e[1mDo you want to enable XDEBUG Logs?\e[0m (no) "
   read PHP_XDEBUG_REMOTE_DOLOG
