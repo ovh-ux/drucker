@@ -171,7 +171,7 @@ while true; do
       echo "Invalid input. Please answer yes or no."
   else
       if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
-        PHP_XDEBUG_REMOTE_LOG="/var/www/html/xdebug.log.txt"
+        PHP_XDEBUG_REMOTE_LOG="yes"
       fi
       break;
   fi
@@ -242,7 +242,11 @@ sed -i "s/%%DRUPAL_VERSION%%/$DRUPAL_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_VERSION%%/$PHP_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_XDEBUG_ENABLED%%/$PHP_XDEBUG_ENABLED/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_XDEBUG_PROXY_PORT%%/$PHP_XDEBUG_PROXY_PORT/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%/$PHP_XDEBUG_REMOTE_LOG/g" "${PROJECT_DIR}/drucker.config"
+if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
+    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%/\/var\/www\/html\/xdebug\.log\.txt/g" "${PROJECT_DIR}/drucker.config"
+else
+    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%//g" "${PROJECT_DIR}/drucker.config"
+fi
 sed -i "s/%%SUBNET%%/$SUBNET/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_VERSION%%/$NODE_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_BROWSERSYNC_PORT%%/$NODE_BROWSERSYNC_PORT/g" "${PROJECT_DIR}/drucker.config"
