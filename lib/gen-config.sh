@@ -165,7 +165,7 @@ while true; do
   fi
 
   REGEX='^(yes)|(no)$';
-  if ! [[ $$PHP_XDEBUG_REMOTE_DOLOG =~ $REGEX ]]; then
+  if ! [[ $PHP_XDEBUG_REMOTE_DOLOG =~ $REGEX ]]; then
       echo "Invalid input. Please answer yes or no."
   else
       if [ $$PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
