@@ -170,7 +170,7 @@ while true; do
   if ! [[ $PHP_XDEBUG_REMOTE_DOLOG =~ $REGEX ]]; then
       echo "Invalid input. Please answer yes or no."
   else
-      if [ $$PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
+      if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
         PHP_XDEBUG_REMOTE_LOG="/var/www/html/xdebug.log.txt"
       fi
       break;
@@ -180,7 +180,6 @@ done
 # Additional XDEBUG variables
 PHP_XDEBUG_PROXY_PORT="9000"
 if [ "${PHP_XDEBUG_ENABLED}" == 1 ]; then
- export
   ## PHP_XDEBUG_PROXY_PORT
   while true; do
     printf "\e[1mEnter the XDEBUG PROXY remote port:\e[0m "
