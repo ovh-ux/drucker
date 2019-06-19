@@ -169,7 +169,7 @@ while true; do
       echo "Invalid input. Please answer yes or no."
   else
       if [ $$PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
-        PHP_XDEBUG_REMOTE_LOG=/var/www/html/xdebug.log.txt
+        PHP_XDEBUG_REMOTE_LOG="/var/www/html/xdebug.log.txt"
       fi
       break;
   fi
