@@ -232,20 +232,17 @@ fi
 
 # Additional SSHFS variables
 PUBLIC_SSH_PORT=""
-if [ "${PUBLIC_SSH_PORT}" == 1 ]; then
-  ## PUBLIC_SSH_PORT
-  while true; do
-    printf "\e[1mEnter the SSH  remote port:\e[0m "
-    read PUBLIC_SSH_PORT
+while true; do
+  printf "\e[1mEnter the SSH  remote port:\e[0m "
+  read PUBLIC_SSH_PORT
 
-    REGEX='^[0-9]+$';
-    if ! [[ $PUBLIC_SSH_PORT =~ $REGEX ]]; then
-        echo "Invalid input. Please use only numbers."
-    else
-        break;
-    fi
-  done
-fi
+  REGEX='^[0-9]+$';
+  if ! [[ $PUBLIC_SSH_PORT =~ $REGEX ]]; then
+      echo "Invalid input. Please use only numbers."
+  else
+      break;
+  fi
+done
 
 # ---
 
