@@ -26,11 +26,6 @@ export PHP_IMAGE="ovh/drupal-php:${PHP_IMAGE_VERSION}"
 export PHP_IMAGE_CONTEXT="./docker-images/drupal-php/${PHP_IMAGE_VERSION}"
 SUBDOMAINS+="${service} "
 
-# service pydbgpproxy
-export PYDBGPPROXY_NAME='dbgproxy'
-export PYDBGPPROXY_IMAGE_CONTEXT="./docker-images/drupal-pydbgpproxy"
-export PYDBGPPROXY_IMAGE='ovh/drupal-pydbgpproxy'
-
 
 # service: www
 service=www
@@ -92,8 +87,18 @@ export MAIL_IP="${SUBNET}.103"
 export MAIL_DOMAIN="mail.${domain}"
 export PMA_IP="${SUBNET}.104"
 export PMA_DOMAIN="pma.${domain}"
-export PYDBGPPROXY_IP="${SUBNET}.105"
-export PYDBGPPROXY_DOMAIN="pydbgpproxy.${domain}"
+
+service=sshfs
+export SSHFS_SERVICE="${service}"
+# the container name:
+export SSHFS_NAME="${PROJECT_NAME_PLAIN}_${service}"
+export SSHFS_IMAGE="ovh/sshfs"
+export SSHFS_IP="${SUBNET}.106"
+export SSHFS_DOMAIN="sshfs.${domain}"
+export SSH_USERS="`whoami`:`id -u`:`id -g`"
+
+export WHOAMI="`whoami`"
+export HOME="$HOME"
 
 # Echo the values set above to create an environment file for use by Docker:
 unset PWD SHLVL

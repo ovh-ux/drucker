@@ -125,14 +125,14 @@ function _php()
         docker-compose \
             --project-name "$PROJECT_NAME_PLAIN" \
             -f "$(druckerdir)/lib/docker-compose.yml" \
-            exec \
+            exec -T \
             -u "${WWW_USER}"  \
             $PHP_SERVICE "${@}"
     else
         docker-compose \
             --project-name "$PROJECT_NAME_PLAIN" \
             -f "$(druckerdir)/lib/docker-compose.yml" \
-            run \
+            run -T \
             --name="${PROJECT_NAME_PLAIN}_tmp_php_$(date +%H%M%S)" \
             -u "${WWW_USER}" \
             --rm \
