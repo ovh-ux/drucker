@@ -15,6 +15,7 @@ fi
 
 DRUCKER_DIR="$(dirname $(pwd))"              # druckerdir: father of this folder
 PROJECT_DIR="$(dirname "${DRUCKER_DIR}")"    # projectdir: grand-father of this folder
+PROJECT_REAL="$(realpath "${PROJECT_DIR}")"    # projectdir: grand-father of this folder
 
 # Load the environment without creating the docker environment file
 source ./environment > /dev/null
@@ -71,12 +72,6 @@ function web_tmp()
 {
     echo "/var/www/html/tmp"
 }
-# @function path_relative_to_projectdir
-#           returns the path of the current pwd relative to the project dir
-function path_relative_to_projectdir()
-{
-    realpath --relative-to="$(projectdir)" "$(pwd)"
-}
 
 # @function check_project_dir
 #           Checks if launched command is inside the current project dir
@@ -97,7 +92,7 @@ function docker_images_build() {
     echo "Building docker-compose images..."
     "${DRUCKER_DIR}"/lib/docker-compose-utils.sh action="build"
     echo "Building custom images..."
-    docker build --no-cache -t "${NODE_IMAGE}" "${NODE_CONTEXT}"
+    docker build -t "${NODE_IMAGE}" "${NODE_CONTEXT}"
 }
 
 # @function tty_option
@@ -184,7 +179,7 @@ function drush()
 # @usage    drupal drupal-console-commands...
 function drupal()
 {
-    _php drupal --root="$(web_docroot)" "${@}"
+    _php /var/www/html/vendor/bin/drupal --root="$(web_docroot)" "${@}"
 }
 
 # @function composer
@@ -194,6 +189,15 @@ function drupal()
 function composer()
 {
     _php composer --working-dir="$(web_wwwdir)" "${@}"
+}
+
+# @function phpunit
+#           calls docerized phpunit for the current project. It uses the docroot as
+#           working directory.
+# @usage    composer composer-commands...
+function phpunit()
+{
+    _php /var/www/html/vendor/bin/phpunit  "${@}"
 }
 
 # @function node_ports
@@ -212,8 +216,8 @@ function node()
         $(tty_option) \
         --rm \
         $(node_ports) \
-        --volume="$(projectdir)":/usr/src/app \
-        --workdir="/usr/src/app/$(path_relative_to_projectdir)" \
+        --volume="$(pwd)":/usr/src/app \
+        --workdir=/usr/src/app \
         --user="${WWW_USER}:${WWW_USER_GROUP}" \
         --name="${PROJECT_NAME_PLAIN}_tmp_node_$(date +%H%M%S)" \
         ${NODE_IMAGE} \
@@ -228,8 +232,8 @@ function npm()
         $(tty_option) \
         --rm \
         $(node_ports) \
-        --volume="$(projectdir)":/usr/src/app \
-        --workdir="/usr/src/app/$(path_relative_to_projectdir)" \
+        --volume="$(pwd)":/usr/src/app \
+        --workdir=/usr/src/app \
         --user="${WWW_USER}:${WWW_USER_GROUP}" \
         --name="${PROJECT_NAME_PLAIN}_tmp_npm_$(date +%H%M%S)" \
         ${NODE_IMAGE} \
@@ -244,8 +248,8 @@ function yarn()
         $(tty_option) \
         --rm \
         $(node_ports) \
-        --volume="$(projectdir)":/usr/src/app \
-        --workdir="/usr/src/app/$(path_relative_to_projectdir)" \
+        --volume="$(pwd)":/usr/src/app \
+        --workdir=/usr/src/app \
         --user="${WWW_USER}:${WWW_USER_GROUP}" \
         --name="${PROJECT_NAME_PLAIN}_tmp_yarn_$(date +%H%M%S)" \
         ${NODE_IMAGE} \
@@ -260,8 +264,8 @@ function gulp()
         $(tty_option) \
         --rm \
         $(node_ports) \
-        --volume="$(projectdir)":/usr/src/app \
-        --workdir="/usr/src/app/$(path_relative_to_projectdir)" \
+        --volume="$(pwd)":/usr/src/app \
+        --workdir=/usr/src/app \
         --user="${WWW_USER}:${WWW_USER_GROUP}" \
         --name="${PROJECT_NAME_PLAIN}_tmp_gulp_$(date +%H%M%S)" \
         ${NODE_IMAGE} \
@@ -286,6 +290,10 @@ function drucker()
         ;;
     "stop")
         "${DRUCKER_DIR}"/lib/docker-compose-utils.sh action="stop"
+        ;;
+    "restart")
+        "${DRUCKER_DIR}"/lib/docker-compose-utils.sh action="stop"
+        "${DRUCKER_DIR}"/lib/docker-compose-utils.sh action="start" -d
         ;;
     "logs")
         "${DRUCKER_DIR}"/lib/docker-compose-utils.sh action="logs"
@@ -351,6 +359,7 @@ function fhelp()
  You can use following commands to call dockerized utilities:
    - \e[1mphp\e[0m       : to open a shell in the php container, as user ${WWW_USER}
    - \e[1mdrush\e[0m     : to call drush in the php container, as user ${WWW_USER}
+   - \e[1mphpunit\e[0m   : to call phpunit in the php container, as user ${WWW_USER}
    - \e[1mdrupal\e[0m    : to call the drupal console in the php container, as user ${WWW_USER}
    - \e[1mcomposer\e[0m  : to call composer in the php container, as user ${WWW_USER}
    - \e[1mnode\e[0m      : to create a node.js container and execute a node.js command
