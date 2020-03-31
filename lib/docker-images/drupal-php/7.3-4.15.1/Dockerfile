@@ -1,4 +1,4 @@
-FROM wodby/drupal-php:7.3-4.15.1
+FROM wodby/drupal-php:7.3-dev-4.15.1
 MAINTAINER OVH-UX <github@ovh.net>
 
 ARG DOCKER_USER=1000

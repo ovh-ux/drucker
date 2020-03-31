@@ -1,0 +1,15 @@
+Port 22
+
+Subsystem sftp internal-sftp
+ChallengeResponseAuthentication no
+PermitRootLogin prohibit-password
+PermitTunnel no
+AuthorizedKeysFile .ssh/authorized_keys /etc/authorized_keys/%u
+X11Forwarding yes
+AllowTcpForwarding yes
+IgnoreRhosts yes
+PermitEmptyPasswords no
+MaxAuthTries 3
+PasswordAuthentication no
+GatewayPorts yes
+

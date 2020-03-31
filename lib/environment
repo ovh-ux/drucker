@@ -32,6 +32,7 @@ service=www
 export WWW_SERVICE="${service}"
 # the container name:
 export WWW_NAME="${PROJECT_NAME_PLAIN}_${service}"
+export WWW_STATIC_NAME="static_${PROJECT_NAME_PLAIN}_${service}"
 # the image to build the container from:
 if [ -z "${WWW_IMAGE_VERSION}" ]; then WWW_IMAGE_VERSION="1.16-5.7.4"; fi
 export WWW_IMAGE="ovh/drupal-nginx:${DRUPAL_VERSION}-${WWW_IMAGE_VERSION}"
@@ -92,8 +93,8 @@ service=sshfs
 export SSHFS_SERVICE="${service}"
 # the container name:
 export SSHFS_NAME="${PROJECT_NAME_PLAIN}_${service}"
-export SSHFS_IMAGE="ovh/docker-sshd"
-export SSHFS_IMAGE_CONTEXT="./docker-images/docker-sshd"
+export SSHFS_IMAGE="ovh/sshfs-docker"
+export SSHFS_IMAGE_CONTEXT="./docker-images/sshfs-docker"
 export SSHFS_IP="${SUBNET}.106"
 export SSHFS_DOMAIN="sshfs.${domain}"
 export SSH_USERS="`whoami`:`id -u`:`id -g`"
@@ -137,3 +138,8 @@ export GREETING=1
 export SITE_NAME="${PROJECT_NAME}"
 export ADMIN_USER=admin
 export ADMIN_PASSWORD=admin
+
+
+DRUCKER_DIR="$(dirname $(pwd))"              # druckerdir: father of this folder
+PROJECT_DIR="$(dirname "${DRUCKER_DIR}")"    # projectdir: grand-father of this folder
+export PROJECT_REAL="$(realpath "${PROJECT_DIR}")"    # projectdir: grand-father of this folder

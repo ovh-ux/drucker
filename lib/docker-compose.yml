@@ -43,17 +43,22 @@ services:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mail:1025
       PHP_XDEBUG: $PHP_XDEBUG_ENABLED
       PHP_XDEBUG_DEFAULT_ENABLE: $PHP_XDEBUG_ENABLED
+      PHP_XDEBUG_IDEKEY: "PHPSTORM"
+     # PHP_XDEBUG_REMOTE_LOG: '/var/www/html/xdebug_log.txt'
       PHP_XDEBUG_PROFILER_ENABLE_TRIGGER: 1
       PHP_XDEBUG_PROFILER_OUTPUT_DIR: '/var/www/html/xdebug/'
       PHP_XDEBUG_REMOTE_HOST: $SSHFS_IP
       PHP_XDEBUG_REMOTE_PORT: 9900
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
+      PHP_APCU_ENABLE_CLI: 1
       PHP_MAX_EXECUTION_TIME: 0
       PHP_FPM_USER: 'wodby'
       PHP_MAX_INPUT_TIME: -1
       PHP_HOST_NAME: $WWW_DOMAIN
       PHP_SITE_NAME: dev # drush alias name
       PHP_IDE_CONFIG: "serverName=ocms"
+      SIMPLETEST_DB: "mysql://drupal:drupal@db.ocms.local/drupal"
+      SIMPLETEST_BASE_URL: "http://ocms_www/"
     volumes:
       - ../../www/:/var/www/html
       - ../docker-runtime/drush:/home/www-data/.drush
@@ -77,11 +82,12 @@ services:
         DOCKER_USER_GROUP: $DOCKER_USER_GROUP
     environment:
       NGINX_SERVER_NAME: localhost
+      NGINX_BACKEND_PORT: 9000
       NGINX_UPSTREAM_NAME: php
       NGINX_DOCROOT: web # Relative path inside the /var/www/html/ directory.
       NGINX_SERVER_ROOT: /var/www/html/web
+      NGINX_VHOST_PRESET: 'drupal8'
       NGINX_BACKEND_HOST: "$PHP_DOMAIN"
-      DRUPAL_VERSION: $DRUPAL_VERSION
     volumes_from:
       - php
     extra_hosts:
@@ -126,19 +132,23 @@ services:
         context: $SSHFS_IMAGE_CONTEXT
     volumes:
        - "/home/$WHOAMI/.ssh/authorized_keys:/etc/authorized_keys/$WHOAMI"
-       - "/home/$WHOAMI/.ssh/id_rsa.pub:/etc/authorized_keys/www:ro"
-       - "/home/$WHOAMI/workspace:/home/$WHOAMI/sshfs"
-       - "$PWD/keys/:/etc/ssh/keys"
+       - "/home/$WHOAMI/workspace/:/home/$WHOAMI/sshfs"
     environment:
-      SSH_ENABLE_ROOT: 'true'
-      SSH_USERS: $SSH_USERS
+        SSH_USERS: $SSH_USERS
     ports:
        - "$PUBLIC_SSH_PORT:22"
        - "9900:9900"
     networks:
         dev_net:
             ipv4_address: $SSHFS_IP
-
+  redis:
+    container_name: "${PROJECT_NAME}_redis"
+    image: wodby/redis:5.0
+    environment:
+        REDIS_PASSWORD: 'ocms_redis'
+    networks:
+        dev_net:
+            ipv4_address: "172.16.1.126"
 networks:
   dev_net:
     driver: bridge
