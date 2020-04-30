@@ -44,7 +44,6 @@ services:
       PHP_XDEBUG: $PHP_XDEBUG_ENABLED
       PHP_XDEBUG_DEFAULT_ENABLE: $PHP_XDEBUG_ENABLED
       PHP_XDEBUG_IDEKEY: "PHPSTORM"
-     # PHP_XDEBUG_REMOTE_LOG: '/var/www/html/xdebug_log.txt'
       PHP_XDEBUG_PROFILER_ENABLE_TRIGGER: 1
       PHP_XDEBUG_PROFILER_OUTPUT_DIR: '/var/www/html/xdebug/'
       PHP_XDEBUG_REMOTE_HOST: $SSHFS_IP
@@ -137,18 +136,9 @@ services:
         SSH_USERS: $SSH_USERS
     ports:
        - "$PUBLIC_SSH_PORT:22"
-       - "9900:9900"
     networks:
         dev_net:
             ipv4_address: $SSHFS_IP
-  redis:
-    container_name: "${PROJECT_NAME}_redis"
-    image: wodby/redis:5.0
-    environment:
-        REDIS_PASSWORD: 'ocms_redis'
-    networks:
-        dev_net:
-            ipv4_address: "172.16.1.126"
 networks:
   dev_net:
     driver: bridge

@@ -116,16 +116,16 @@ done
 
 ## PHP_VERSION
 while true; do
-  printf "\e[1mEnter the PHP version:\e[0m (7.0) "
+  printf "\e[1mEnter the PHP version:\e[0m (7.3) "
   read PHP_VERSION
 
   if [ -z $PHP_VERSION ]; then
-    PHP_VERSION="7.0"
+    PHP_VERSION="7.3"
   fi
 
   # @TOFIX: only PHP 7.0-1 for now
   # REGEX='^[0-9]+(\.[0-9]+)?$';
-  REGEX='^7\.[0-1]$';
+  REGEX='^7\.[0-3]$';
   if ! [[ $PHP_VERSION =~ $REGEX ]]; then
       echo "Invalid input. Please use only numbers."
   else
@@ -155,44 +155,6 @@ while true; do
   fi
 done
 
-## PHP_XDEBUG_REMOTE_LOG
-
-PHP_XDEBUG_REMOTE_LOG=""
-while true; do
-  printf "\e[1mDo you want to enable XDEBUG Logs?\e[0m (no) "
-  read PHP_XDEBUG_REMOTE_DOLOG
-
-  if [ -z $PHP_XDEBUG_REMOTE_DOLOG ]; then
-    $PHP_XDEBUG_REMOTE_DOLOG="no"
-  fi
-
-  REGEX='^(yes)|(no)$';
-  if ! [[ $PHP_XDEBUG_REMOTE_DOLOG =~ $REGEX ]]; then
-      echo "Invalid input. Please answer yes or no."
-  else
-      if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
-        PHP_XDEBUG_REMOTE_LOG="yes"
-      fi
-      break;
-  fi
-done
-
-# Additional XDEBUG variables
-PHP_XDEBUG_PROXY_PORT="9000"
-if [ "${PHP_XDEBUG_ENABLED}" == 1 ]; then
-  ## PHP_XDEBUG_PROXY_PORT
-  while true; do
-    printf "\e[1mEnter the XDEBUG PROXY remote port:\e[0m "
-    read PHP_XDEBUG_PROXY_PORT
-
-    REGEX='^[0-9]+$';
-    if ! [[ $PHP_XDEBUG_PROXY_PORT =~ $REGEX ]]; then
-        echo "Invalid input. Please use only numbers."
-    else
-        break;
-    fi
-  done
-fi
 
 ## NODE_VERSION
 while true; do
@@ -257,12 +219,6 @@ sed -i "s/%%PUBLIC_SSH_PORT%%/$PUBLIC_SSH_PORT/g" "${PROJECT_DIR}/drucker.config
 sed -i "s/%%DRUPAL_VERSION%%/$DRUPAL_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_VERSION%%/$PHP_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_XDEBUG_ENABLED%%/$PHP_XDEBUG_ENABLED/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_PROXY_PORT%%/$PHP_XDEBUG_PROXY_PORT/g" "${PROJECT_DIR}/drucker.config"
-if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
-    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%/\/var\/www\/html\/xdebug\.log\.txt/g" "${PROJECT_DIR}/drucker.config"
-else
-    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%//g" "${PROJECT_DIR}/drucker.config"
-fi
 sed -i "s/%%SUBNET%%/$SUBNET/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_VERSION%%/$NODE_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_BROWSERSYNC_PORT%%/$NODE_BROWSERSYNC_PORT/g" "${PROJECT_DIR}/drucker.config"
