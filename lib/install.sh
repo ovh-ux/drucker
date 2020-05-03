@@ -42,7 +42,7 @@ composer run post-install-cmd
 
 # Run drupal-scaffold
 echo "Running Drupal-scaffold..."
-composer run-script drupal-scaffold
+composer drupal:scaffold
 
 # Install and build custom themes
 echo "Building custom themes..."
@@ -86,7 +86,7 @@ if [ -e "$(projectdir)/www/config/sync/system.site.yml" ]; then
 
     # Install from config
     echo "Installing Drupal with config_installer (from config files)..."
-    drush si config_installer -y \
+    drush si config_installer -y -v \
         config_installer_sync_configure_form.sync_directory="../config/sync" \
         --db-url="mysql://${DB_DRUPAL_USER}:${DB_DRUPAL_PASSWORD}@$DB_DOMAIN/${DB_DRUPAL_DB}"  \
         --db-su=root \

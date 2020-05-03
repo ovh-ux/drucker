@@ -15,6 +15,15 @@ services:
       MYSQL_DATABASE: $DB_DRUPAL_DB
       MYSQL_USER: $DB_DRUPAL_USER
       MYSQL_PASSWORD: $DB_DRUPAL_PASSWORD
+      MYSQL_MAX_CONNECTIONS: 500
+      MYSQL_THREAD_CACHE_SIZE: 128M
+      MYSQL_SORT_BUFFER_SIZE: 4M
+      MYSQL_TMP_TABLE_SIZE: 32M
+      MYSQL_MAX_HEAP_TABLE_SIZE: 32M
+      MYSQL_INNODB_BUFFER_POOL_SIZE: 256M
+      MYSQL_INNODB_IO_CAPACITY: 400
+      MYSQL_INNODB_READ_IO_THREADS: 16
+      MYSQL_INNODB_WRITE_IO_THREADS: 16
     volumes:
       - ../docker-runtime/mysql:/var/lib/mysql
       - ../docker-runtime/mysql-init:/docker-entrypoint-initdb.d # Place init .sql file(s) here
@@ -33,11 +42,18 @@ services:
     environment:
       PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mail:1025
       PHP_XDEBUG: $PHP_XDEBUG_ENABLED
-      PHP_XDEBUG_REMOTE_HOST: $PHP_XDEBUG_REMOTE_HOST
-      PHP_XDEBUG_REMOTE_PORT: $PHP_XDEBUG_REMOTE_PORT
+      PHP_XDEBUG_DEFAULT_ENABLE: $PHP_XDEBUG_ENABLED
+      PHP_XDEBUG_PROFILER_ENABLE_TRIGGER: 1
+      PHP_XDEBUG_PROFILER_OUTPUT_DIR: '/var/www/html/xdebug/'
+      PHP_XDEBUG_REMOTE_HOST: $SSHFS_IP
+      PHP_XDEBUG_REMOTE_PORT: 9900
       PHP_XDEBUG_REMOTE_CONNECT_BACK: 0
+      PHP_MAX_EXECUTION_TIME: 0
+      PHP_FPM_USER: 'wodby'
+      PHP_MAX_INPUT_TIME: -1
       PHP_HOST_NAME: $WWW_DOMAIN
       PHP_SITE_NAME: dev # drush alias name
+      PHP_IDE_CONFIG: "serverName=ocms"
     volumes:
       - ../../www/:/var/www/html
       - ../docker-runtime/drush:/home/www-data/.drush
@@ -51,7 +67,6 @@ services:
     networks:
       dev_net:
         ipv4_address: $PHP_IP
-
   www:
     container_name: $WWW_NAME
     image: $WWW_IMAGE
@@ -78,7 +93,6 @@ services:
         ipv4_address: $WWW_IP
     ports:
       - "$PUBLIC_WWW_PORT:80"
-
   mail:
     container_name: $MAIL_NAME
     image: $MAIL_IMAGE
@@ -105,6 +119,25 @@ services:
         ipv4_address: $PMA_IP
     ports:
       - "$PUBLIC_PMA_PORT:80"
+  sshfs:
+    container_name: $SSHFS_NAME
+    image: $SSHFS_IMAGE
+    build:
+        context: $SSHFS_IMAGE_CONTEXT
+    volumes:
+       - "/home/$WHOAMI/.ssh/authorized_keys:/etc/authorized_keys/$WHOAMI"
+       - "/home/$WHOAMI/.ssh/id_rsa.pub:/etc/authorized_keys/www:ro"
+       - "/home/$WHOAMI/workspace:/home/$WHOAMI/sshfs"
+       - "$PWD/keys/:/etc/ssh/keys"
+    environment:
+      SSH_ENABLE_ROOT: 'true'
+      SSH_USERS: $SSH_USERS
+    ports:
+       - "$PUBLIC_SSH_PORT:22"
+       - "9900:9900"
+    networks:
+        dev_net:
+            ipv4_address: $SSHFS_IP
 
 networks:
   dev_net:

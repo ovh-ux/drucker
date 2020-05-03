@@ -155,31 +155,38 @@ while true; do
   fi
 done
 
+## PHP_XDEBUG_REMOTE_LOG
+
+PHP_XDEBUG_REMOTE_LOG=""
+while true; do
+  printf "\e[1mDo you want to enable XDEBUG Logs?\e[0m (no) "
+  read PHP_XDEBUG_REMOTE_DOLOG
+
+  if [ -z $PHP_XDEBUG_REMOTE_DOLOG ]; then
+    $PHP_XDEBUG_REMOTE_DOLOG="no"
+  fi
+
+  REGEX='^(yes)|(no)$';
+  if ! [[ $PHP_XDEBUG_REMOTE_DOLOG =~ $REGEX ]]; then
+      echo "Invalid input. Please answer yes or no."
+  else
+      if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
+        PHP_XDEBUG_REMOTE_LOG="yes"
+      fi
+      break;
+  fi
+done
+
 # Additional XDEBUG variables
-PHP_XDEBUG_REMOTE_HOST="localhost"
-PHP_XDEBUG_REMOTE_PORT="9000"
+PHP_XDEBUG_PROXY_PORT="9000"
 if [ "${PHP_XDEBUG_ENABLED}" == 1 ]; then
-
-  ## PHP_XDEBUG_REMOTE_HOST
+  ## PHP_XDEBUG_PROXY_PORT
   while true; do
-    printf "\e[1mEnter the XDEBUG remote host:\e[0m "
-    read PHP_XDEBUG_REMOTE_HOST
-
-    REGEX='^[a-z0-9_.-]+$';
-    if ! [[ $PHP_XDEBUG_REMOTE_HOST =~ $REGEX ]]; then
-        echo "Invalid input. Please use a valid host name."
-    else
-        break;
-    fi
-  done
-
-  ## PHP_XDEBUG_REMOTE_PORT
-  while true; do
-    printf "\e[1mEnter the XDEBUG remote port:\e[0m "
-    read PHP_XDEBUG_REMOTE_PORT
+    printf "\e[1mEnter the XDEBUG PROXY remote port:\e[0m "
+    read PHP_XDEBUG_PROXY_PORT
 
     REGEX='^[0-9]+$';
-    if ! [[ $PHP_XDEBUG_REMOTE_PORT =~ $REGEX ]]; then
+    if ! [[ $PHP_XDEBUG_PROXY_PORT =~ $REGEX ]]; then
         echo "Invalid input. Please use only numbers."
     else
         break;
@@ -223,7 +230,22 @@ if [ "${NODE_VERSION}" == "9-php" ]; then
   done
 fi
 
+# Additional SSHFS variables
+PUBLIC_SSH_PORT=""
+while true; do
+  printf "\e[1mEnter the SSH  remote port:\e[0m "
+  read PUBLIC_SSH_PORT
+
+  REGEX='^[0-9]+$';
+  if ! [[ $PUBLIC_SSH_PORT =~ $REGEX ]]; then
+      echo "Invalid input. Please use only numbers."
+  else
+      break;
+  fi
+done
+
 # ---
+
 
 cp -f "${DRUCKER_DIR}/templates/drucker.config" "${PROJECT_DIR}/drucker.config"
 
@@ -231,11 +253,16 @@ sed -i "s/%%PROJECT_NAME%%/$PROJECT_NAME/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PROJECT_NAME_PLAIN%%/$PROJECT_NAME_PLAIN/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PUBLIC_WWW_PORT%%/$PUBLIC_WWW_PORT/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PUBLIC_PMA_PORT%%/$PUBLIC_PMA_PORT/g" "${PROJECT_DIR}/drucker.config"
+sed -i "s/%%PUBLIC_SSH_PORT%%/$PUBLIC_SSH_PORT/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%DRUPAL_VERSION%%/$DRUPAL_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_VERSION%%/$PHP_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%PHP_XDEBUG_ENABLED%%/$PHP_XDEBUG_ENABLED/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_REMOTE_HOST%%/$PHP_XDEBUG_REMOTE_HOST/g" "${PROJECT_DIR}/drucker.config"
-sed -i "s/%%PHP_XDEBUG_REMOTE_PORT%%/$PHP_XDEBUG_REMOTE_PORT/g" "${PROJECT_DIR}/drucker.config"
+sed -i "s/%%PHP_XDEBUG_PROXY_PORT%%/$PHP_XDEBUG_PROXY_PORT/g" "${PROJECT_DIR}/drucker.config"
+if [ $PHP_XDEBUG_REMOTE_DOLOG = "yes" ]; then
+    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%/\/var\/www\/html\/xdebug\.log\.txt/g" "${PROJECT_DIR}/drucker.config"
+else
+    sed -i "s/%%PHP_XDEBUG_REMOTE_LOG%%//g" "${PROJECT_DIR}/drucker.config"
+fi
 sed -i "s/%%SUBNET%%/$SUBNET/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_VERSION%%/$NODE_VERSION/g" "${PROJECT_DIR}/drucker.config"
 sed -i "s/%%NODE_BROWSERSYNC_PORT%%/$NODE_BROWSERSYNC_PORT/g" "${PROJECT_DIR}/drucker.config"
